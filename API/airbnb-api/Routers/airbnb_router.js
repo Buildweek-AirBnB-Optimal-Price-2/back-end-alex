@@ -2,6 +2,7 @@ const express = require("express");
 const users = require("../../airbnb-api/Models/airbnb-model");
 
 const router = express.Router();
+//removed
 
 router.get("/", async (req, res, next) => {
   try {

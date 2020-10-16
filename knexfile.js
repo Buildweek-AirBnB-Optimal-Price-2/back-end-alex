@@ -21,7 +21,7 @@ module.exports = {
   },
 
   staging: {
-    client: "postgres",
+    client: "pg",
     connection: {
       filename: "./dev.sqlite3",
       user: "username",
@@ -37,12 +37,8 @@ module.exports = {
   },
 
   production: {
-    client: "postgres",
-    connection: {
-      filename: "./dev.sqlite3",
-      user: "username",
-      password: "password",
-    },
+    client: "pg",
+    connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10,

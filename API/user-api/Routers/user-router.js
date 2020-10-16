@@ -88,7 +88,7 @@ router.post("/:id/housing", restrict(), (req, res) => {
     });
 });
 
-router.get("/:id/housing", (req, res) => {
+router.get("/:id/housing", restrict(), (req, res) => {
   const id = req.params.id;
 
   airbnb

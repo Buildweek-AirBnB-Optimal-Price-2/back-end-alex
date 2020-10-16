@@ -1,9 +1,11 @@
 const express = require("express");
 const users = require("../Models/user-model");
+const airbnb = require("../../airbnb-api/Models/airbnb-model");
 const restrict = require("../../middleware/user-middleware");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+
 router.post("/register", async (req, res, next) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
@@ -69,6 +71,34 @@ router.post("/login", async (req, res, next) => {
         res.status(500).json({ message: "Unable to retrieve user" });
       });
   });
+});
+
+router.post("/:id/housing", restrict(), (req, res) => {
+  const id = req.params.id;
+  const housing = req.body;
+  const newHousing = { ...housing, user_id: id };
+
+  airbnb
+    .add(newHousing)
+    .then((added) => {
+      res.status(200).json(added);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
+router.get("/:id/housing", (req, res) => {
+  const id = req.params.id;
+
+  airbnb
+    .findByUser(id)
+    .then((houses) => {
+      res.status(201).json(houses);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "unable to find any properties" });
+    });
 });
 
 module.exports = router;

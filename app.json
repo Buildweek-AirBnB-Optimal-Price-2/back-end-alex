@@ -1,0 +1,7 @@
+{
+  "name": "running Node.js",
+  "description": "Airbnb/user registration and login",
+  "repository": "https://github.com/Buildweek-AirBnB-Optimal-Price-2/back-end-alex.git",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}

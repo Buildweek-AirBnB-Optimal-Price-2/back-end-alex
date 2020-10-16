@@ -21,7 +21,7 @@ module.exports = {
   },
 
   staging: {
-    client: "sqlite3",
+    client: "postgres",
     connection: {
       filename: "./dev.sqlite3",
       user: "username",
@@ -37,7 +37,7 @@ module.exports = {
   },
 
   production: {
-    client: "sqlite3",
+    client: "postgres",
     connection: {
       filename: "./dev.sqlite3",
       user: "username",

@@ -15,8 +15,6 @@ server.use(
 );
 server.use("/api/users", userRouter);
 server.use("/api/airbnb", authenticate, airbnbRouter);
-server.use(userRouter);
-server.use(airbnbRouter);
 server.get("/", (req, res) => {
   res.json({ Message: "Welcome" });
 });

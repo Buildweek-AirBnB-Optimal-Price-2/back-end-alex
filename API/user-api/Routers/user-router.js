@@ -1,10 +1,15 @@
 const express = require("express");
 const users = require("../Models/user-model");
 const airbnb = require("../../airbnb-api/Models/airbnb-model");
-const restrict = require("../../middleware/user-middleware");
+const restrict = require("../../middleware/airbnb-middleware");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+
+router.get("/", restrict, async (req, res) => {
+  console.log("got here");
+  return res.status(200).json(await users.find());
+});
 
 router.post("/register", async (req, res, next) => {
   let user = req.body;
@@ -46,34 +51,26 @@ router.post("/login", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-
-  router.get("/", restrict(), async (req, res, next) => {
-    try {
-      res.json(await users.find());
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  router.get("/:id", restrict(), async (req, res, next) => {
-    const id = req.params.id;
-
-    users
-      .findById(id)
-      .then((user) => {
-        if (user) {
-          res.status(200).json(user);
-        } else {
-          res.status(401).json({ message: "User does not exist" });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({ message: "Unable to retrieve user" });
-      });
-  });
 });
 
-router.post("/:id/housing", restrict(), (req, res) => {
+router.get("/:id", restrict, async (req, res, next) => {
+  const id = req.params.id;
+
+  users
+    .findById(id)
+    .then((user) => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(401).json({ message: "User does not exist" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Unable to retrieve user" });
+    });
+});
+
+router.post("/:id/housing", restrict, (req, res) => {
   const id = req.params.id;
   const housing = req.body;
   const newHousing = { ...housing, user_id: id };
@@ -88,7 +85,7 @@ router.post("/:id/housing", restrict(), (req, res) => {
     });
 });
 //heroku
-router.get("/:id/housing", restrict(), (req, res) => {
+router.get("/:id/housing", restrict, (req, res) => {
   const id = req.params.id;
 
   airbnb

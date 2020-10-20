@@ -61,13 +61,13 @@ router.get("/:id", restrict, async (req, res, next) => {
     .findById(id)
     .then((user) => {
       if (user) {
-        res.status(200).json(user);
+        return res.status(200).json(user);
       } else {
-        res.status(401).json({ message: "User does not exist" });
+        return res.status(401).json({ message: "User does not exist" });
       }
     })
     .catch((error) => {
-      res.status(500).json({ message: "Unable to retrieve user" });
+      return res.status(500).json({ message: "Unable to retrieve user" });
     });
 });
 
@@ -79,10 +79,10 @@ router.post("/:id/housing", restrict, (req, res) => {
   airbnb
     .add(newHousing)
     .then((added) => {
-      res.status(200).json(added);
+      return res.status(200).json(added);
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      return res.status(500).json({ error: err });
     });
 });
 //heroku
@@ -92,10 +92,10 @@ router.get("/:id/housing", restrict, (req, res) => {
   airbnb
     .findByUser(id)
     .then((houses) => {
-      res.status(201).json(houses);
+      return res.status(201).json(houses);
     })
     .catch((err) => {
-      res.status(500).json({ message: "unable to find any properties" });
+      return res.status(500).json({ message: "unable to find any properties" });
     });
 });
 

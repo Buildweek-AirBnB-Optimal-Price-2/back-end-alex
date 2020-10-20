@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
-  if (users.username === "" || users.password === "") {
+  if (!user || !user.username || !user.password) {
     return res
       .status(404)
       .json({ message: "Please enter a username and password" });

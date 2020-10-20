@@ -4,15 +4,16 @@ const users = require("../../airbnb-api/Models/airbnb-model");
 const router = express.Router();
 //removed
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   try {
     return res.json(await users.find());
   } catch (err) {
-    next(err);
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
   console.log(req.body);
   users
@@ -29,7 +30,7 @@ router.get("/:id", async (req, res, next) => {
     });
 });
 //heroku
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
 
   users
@@ -42,7 +43,7 @@ router.delete("/:id", (req, res, next) => {
     });
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", (req, res) => {
   const id = req.params.id;
   const update = req.body;
 

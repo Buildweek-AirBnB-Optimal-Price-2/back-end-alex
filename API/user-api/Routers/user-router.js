@@ -16,14 +16,20 @@ router.post("/register", async (req, res) => {
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
-  try {
-    console.log("adding user");
-    const saved = await users.add(user);
-    console.log("User Added");
-    return res.status(201).json(saved);
-  } catch (err) {
-    console.log(err.message);
-    return res.status(500).json(err);
+  if (!user) {
+    return res
+      .status(404)
+      .json({ message: "Please enter a username and password" });
+  } else {
+    try {
+      console.log("adding user");
+      const saved = await users.add(user);
+      console.log("User Added");
+      return res.status(201).json(saved);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json(err);
+    }
   }
 });
 

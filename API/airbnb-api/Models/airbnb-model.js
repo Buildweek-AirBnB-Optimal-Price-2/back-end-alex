@@ -1,8 +1,12 @@
 const db = require("../../../config");
 
 async function add(airbnb) {
-  const id = await db("airbnb_rental").insert(airbnb);
-  return findById(id);
+  try {
+    const id = await db("airbnb_rental").insert(airbnb);
+    return findById(id);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function find() {

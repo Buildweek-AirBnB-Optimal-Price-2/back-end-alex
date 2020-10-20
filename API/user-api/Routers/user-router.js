@@ -11,7 +11,7 @@ router.get("/", restrict, async (req, res) => {
   return res.status(200).json(await users.find());
 });
 
-router.post("/register", async (req, res, next) => {
+router.post("/register", async (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
@@ -22,7 +22,7 @@ router.post("/register", async (req, res, next) => {
     return res.status(201).json(saved);
   } catch (err) {
     console.log(err.message);
-    next(err);
+    return res.status(500).json(err);
   }
 });
 

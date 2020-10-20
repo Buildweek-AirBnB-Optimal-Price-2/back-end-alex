@@ -25,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(500).json({ message: "unable to retrieve user" });
+      return res.status(500).json({ message: "unable to retrieve user" });
     });
 });
 //heroku

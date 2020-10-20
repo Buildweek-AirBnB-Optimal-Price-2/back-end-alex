@@ -1,8 +1,12 @@
 const db = require("../../../config");
 
 async function add(user) {
-  const [id] = await db("users").insert(user);
-  return findById(id);
+  try {
+    const [id] = await db("users").insert(user);
+    return findById(id);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function find() {

@@ -106,4 +106,17 @@ router.get("/:id/housing", restrict, (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+
+  users
+    .deleteUserById(id)
+    .then((deleted) => {
+      return res.status(201).json(deleted);
+    })
+    .catch((err) => {
+      return res.status(500).json(err);
+    });
+});
+
 module.exports = router;

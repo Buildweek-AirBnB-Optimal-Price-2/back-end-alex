@@ -17,6 +17,7 @@ router.post("/register", async (req, res) => {
   user.password = hash;
 
   try {
+    console.log("adding user");
     const saved = await users.add(user);
     console.log("User Added");
     return res.status(201).json(saved);

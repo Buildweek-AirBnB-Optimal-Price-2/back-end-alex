@@ -16,7 +16,7 @@ server.use(
 server.use("/api/users", userRouter);
 server.use("/api/airbnb", authenticate, airbnbRouter);
 server.get("/", (req, res) => {
-  res.json({ Message: "Welcome" });
+  return res.json({ Message: "Welcome" });
 });
 
 module.exports = server;

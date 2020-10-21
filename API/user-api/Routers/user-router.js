@@ -37,11 +37,16 @@ router.post("/login", async (req, res, next) => {
   let { username, password } = req.body;
 
   try {
-    const [user] = await users.findBy({ username });
+    const user = await users.findBy({ username });
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid Username or Password",
+      });
+    }
     console.log(user);
     const passwordValidation = await bcrypt.compare(password, user.password);
-
-    if (!user || !passwordValidation) {
+    console.log("passwordValidation", passwordValidation);
+    if (!passwordValidation) {
       return res.status(401).json({
         message: "Invalid Username or Password",
       });
@@ -53,7 +58,7 @@ router.post("/login", async (req, res, next) => {
       },
       process.env.JWT_SECRET || "This is a secret"
     );
-    res.json({
+    return res.json({
       message: `Welcome ${user.username}`,
       token,
     });

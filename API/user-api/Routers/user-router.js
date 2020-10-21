@@ -14,7 +14,7 @@ router.get("/", restrict, async (req, res) => {
 router.post("/register", async (req, res) => {
   let user = req.body;
 
-  if (!user || !user.username || !user.password) {
+  if (!user || !user.username || !user.password || !user.email || !user.name) {
     return res
       .status(404)
       .json({ message: "Please enter a username and password" });

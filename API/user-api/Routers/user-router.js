@@ -82,15 +82,24 @@ router.post("/:id/housing", restrict, (req, res) => {
   const id = req.params.id;
   const housing = req.body;
   const newHousing = { ...housing, user_id: id };
-
-  airbnb
-    .add(newHousing)
-    .then((added) => {
-      return res.status(200).json(added);
-    })
-    .catch((err) => {
-      return res.status(500).json({ error: err });
-    });
+  try {
+    if (!housing) {
+      return res
+        .status(500)
+        .json({ error: "Please enter the correct information" });
+    } else {
+      airbnb
+        .add(newHousing)
+        .then((added) => {
+          return res.status(200).json(added);
+        })
+        .catch((err) => {
+          return res.status(500).json({ error: err });
+        });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 //heroku
 router.get("/:id/housing", restrict, (req, res) => {

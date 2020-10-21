@@ -39,7 +39,7 @@ function findById(id) {
 }
 
 function findByUser(id) {
-  return db("airbnb_rental").where("user_id", "=", id);
+  return db("airbnb_rental").where(("user_id" = id));
 }
 
 function update(id, house) {

@@ -10,7 +10,7 @@ async function add(user) {
 }
 
 function find() {
-  return db("users").select("id", "username", "name", "email").orderBy("id");
+  return db("users").select("id", "username").orderBy("id");
 }
 
 function findBy(filter) {

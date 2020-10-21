@@ -3,6 +3,8 @@ exports.up = async function (knex) {
     table.increments("id");
     table.text("username").unique().notNullable();
     table.text("password").notNullable();
+    table.text("email").notNullable().unique();
+    table.text("name").notNullable();
   });
 
   await knex.schema.createTable("airbnb_rental", (table) => {

@@ -33,10 +33,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
+  let { username, password } = req.body;
+
   try {
-    let { username, password } = req.body;
     const [user] = await users.findBy({ username });
+    console.log(user);
     const passwordValidation = await bcrypt.compare(password, user.password);
 
     if (!user || !passwordValidation) {
@@ -56,8 +58,7 @@ router.post("/login", async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err);
-    // next(err);
+    next(err);
   }
 });
 

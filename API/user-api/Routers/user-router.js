@@ -37,7 +37,10 @@ router.post("/login", async (req, res, next) => {
   try {
     let { username, password } = req.body;
     const [user] = await users.findBy({ username });
-    const passwordValidation = await bcrypt.compare(password, user.password);
+    const passwordValidation = await bcrypt.compare(
+      { password },
+      user.password
+    );
 
     if (!user || !passwordValidation) {
       return res.status(401).json({

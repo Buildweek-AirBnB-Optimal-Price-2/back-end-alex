@@ -1,5 +1,5 @@
 const db = require("../../../config");
-
+// console.log("db", db);
 async function add(user) {
   try {
     const [id] = await db("users").insert(user);
